@@ -38,8 +38,8 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: #f76531;
-      color: #ffffff;
+      background: #ebf852;
+      color: #282828;
       padding: 6px 14px;
       border-radius: 4px;
       margin-bottom: 28px;
@@ -62,6 +62,16 @@
       max-width: 540px;
       margin: 0 auto;
     }
+
+    .divider-wrap {
+      position: relative;
+    }
+
+    .divider-wrap .s2 {
+      display: none;
+    }
+
+    .s2-desktop { display: block; } /* visible en desktop como fixed */
 
     .divider {
       width: 48px;
@@ -95,6 +105,34 @@
     .s4 { width: 230px; right: 40px;  bottom: 40px;  transform: rotate(-7deg); z-index: 101; }
 
     @media (max-width: 900px) {
+      .s2-desktop { display: none; }
+
+      .prizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .divider-wrap {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .divider-wrap .s2 {
+        display: block;
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%) rotate(-6deg);
+        width: 130px;
+        z-index: 10;
+      }
+
+      .divider-wrap .s2 img {
+        width: 100%;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      }
+
       .sticker {
         position: static;
         transform: none;
@@ -163,7 +201,7 @@
       position: absolute;
       top: 10px;
       left: 10px;
-      background: rgba(0,0,0,0.55);
+      background: #282828;
       color: #fff;
       font-size: 11px;
       font-weight: 700;
@@ -379,9 +417,9 @@
       <p>Rifaremos premios de arte y diseño para poder costear la hospitalización de Apolo.</p>
     </div>
 
+    <div class="sticker s2 s2-desktop"><img src="img/2.png" alt="Apolo" /></div>
     <div class="stickers-mobile">
       <div class="sticker s1"><img src="img/1.png" alt="Apolo" /></div>
-      <div class="sticker s2"><img src="img/2.png" alt="Apolo" /></div>
       <div class="sticker s3"><img src="img/3.png" alt="Apolo" /></div>
       <div class="sticker s4"><img src="img/4.png" alt="Apolo" /></div>
     </div>
@@ -535,7 +573,10 @@
     </div>
   </section>
 
-  <div class="divider"></div>
+  <div class="divider-wrap">
+    <div class="divider"></div>
+    <div class="sticker s2"><img src="img/2.png" alt="Apolo" /></div>
+  </div>
 
   <!-- INSTRUCTIONS + TRANSFER -->
   <section class="instructions-section">
