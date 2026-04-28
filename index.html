@@ -104,66 +104,6 @@
     /* bottom-right: perro ojos grandes */
     .s4 { width: 230px; right: 40px;  bottom: 40px;  transform: rotate(-7deg); z-index: 101; }
 
-    @media (max-width: 900px) {
-      .s2-desktop { display: none; }
-
-      .prizes-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .divider-wrap {
-        height: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .divider-wrap .s2 {
-        display: block;
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%) rotate(-6deg);
-        width: 130px;
-        z-index: 10;
-      }
-
-      .divider-wrap .s2 img {
-        width: 100%;
-        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
-      }
-
-      .sticker {
-        position: static;
-        transform: none;
-        width: auto;
-      }
-
-      .hero-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 32px;
-        padding: 60px 24px 40px;
-      }
-
-      .stickers-mobile {
-        display: flex;
-        justify-content: center;
-        flex-wrap: nowrap;
-      }
-
-      .sticker img {
-        width: 100px;
-        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
-      }
-
-      .s1 { transform: rotate(8deg);  margin-right: -28px; z-index: 1; }
-      .s2 { transform: rotate(-12deg); margin-right: -24px; z-index: 2; }
-      .s3 { transform: rotate(10deg); margin-right: -28px; z-index: 1; }
-      .s4 { transform: rotate(-8deg); z-index: 2; }
-    }
-
     /* ── PRIZES ── */
     .prizes-section {
       padding: 0 24px 80px;
@@ -404,6 +344,66 @@
       padding: 32px 24px;
       font-size: 13px;
       color: #d1d5db;
+    }
+
+    @media (max-width: 900px) {
+      .s2-desktop { display: none; }
+
+      .prizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .divider-wrap {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .divider-wrap .s2 {
+        display: block;
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%) rotate(-6deg);
+        width: 130px;
+        z-index: 10;
+      }
+
+      .divider-wrap .s2 img {
+        width: 100%;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      }
+
+      .sticker {
+        position: static;
+        transform: none;
+        width: auto;
+      }
+
+      .hero-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding: 60px 24px 40px;
+      }
+
+      .stickers-mobile {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+      .sticker img {
+        width: 130px;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      }
+
+      .s1 { transform: rotate(8deg);  margin-right: -36px; z-index: 1; }
+      .s2 { transform: rotate(-12deg); margin-right: -32px; z-index: 2; }
+      .s3 { transform: rotate(10deg); margin-right: -36px; z-index: 1; }
+      .s4 { transform: rotate(-8deg); z-index: 2; }
     }
   </style>
 </head>
