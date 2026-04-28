@@ -112,20 +112,18 @@
       .stickers-mobile {
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: -8px;
-        margin: 0 -16px;
+        flex-wrap: nowrap;
       }
 
       .sticker img {
-        width: 110px;
+        width: 100px;
         filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
       }
 
-      .s1 { transform: rotate(8deg)  translateX(12px); z-index: 1; }
-      .s2 { transform: rotate(-10deg) translateX(-8px); z-index: 2; }
-      .s3 { transform: rotate(12deg) translateX(8px);  z-index: 1; }
-      .s4 { transform: rotate(-8deg) translateX(-12px); z-index: 2; }
+      .s1 { transform: rotate(8deg);  margin-right: -28px; z-index: 1; }
+      .s2 { transform: rotate(-12deg); margin-right: -24px; z-index: 2; }
+      .s3 { transform: rotate(10deg); margin-right: -28px; z-index: 1; }
+      .s4 { transform: rotate(-8deg); z-index: 2; }
     }
 
     /* ── PRIZES ── */
