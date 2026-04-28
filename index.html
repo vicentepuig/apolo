@@ -72,6 +72,8 @@
     }
 
     /* ── STICKERS ── */
+    .stickers-mobile { display: contents; }
+
     .sticker {
       position: fixed;
       pointer-events: none;
@@ -93,7 +95,37 @@
     .s4 { width: 230px; right: 40px;  bottom: 40px;  transform: rotate(-7deg); z-index: 101; }
 
     @media (max-width: 900px) {
-      .sticker { display: none; }
+      .sticker {
+        position: static;
+        transform: none;
+        width: auto;
+      }
+
+      .hero-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding: 60px 24px 40px;
+      }
+
+      .stickers-mobile {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: -8px;
+        margin: 0 -16px;
+      }
+
+      .sticker img {
+        width: 110px;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      }
+
+      .s1 { transform: rotate(8deg)  translateX(12px); z-index: 1; }
+      .s2 { transform: rotate(-10deg) translateX(-8px); z-index: 2; }
+      .s3 { transform: rotate(12deg) translateX(8px);  z-index: 1; }
+      .s4 { transform: rotate(-8deg) translateX(-12px); z-index: 2; }
     }
 
     /* ── PRIZES ── */
@@ -349,10 +381,12 @@
       <p>Rifaremos premios de arte y diseño para poder costear la hospitalización de Apolo.</p>
     </div>
 
-    <div class="sticker s1"><img src="img/1.png" alt="Apolo" /></div>
-    <div class="sticker s2"><img src="img/2.png" alt="Apolo" /></div>
-    <div class="sticker s3"><img src="img/3.png" alt="Apolo" /></div>
-    <div class="sticker s4"><img src="img/4.png" alt="Apolo" /></div>
+    <div class="stickers-mobile">
+      <div class="sticker s1"><img src="img/1.png" alt="Apolo" /></div>
+      <div class="sticker s2"><img src="img/2.png" alt="Apolo" /></div>
+      <div class="sticker s3"><img src="img/3.png" alt="Apolo" /></div>
+      <div class="sticker s4"><img src="img/4.png" alt="Apolo" /></div>
+    </div>
   </section>
 
   <!-- PRIZES -->
