@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rifa por Apolo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f6;
+      color: #282828;
+      text-align: center;
+    }
+
+    /* ── HERO ── */
+    .hero-wrapper {
+      position: relative;
+      padding: 100px 24px 80px;
+    }
+
+    .hero {
+      max-width: 580px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: #ebf852;
+      color: #282828;
+      padding: 6px 14px;
+      border-radius: 4px;
+      margin-bottom: 28px;
+      transform: rotate(-2.5deg);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      color: #7395e7;
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      color: #282828;
+      line-height: 1.7;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .divider-wrap {
+      position: relative;
+    }
+
+    .divider-wrap .s2 {
+      display: none;
+    }
+
+    .s2-desktop { display: block; } /* visible en desktop como fixed */
+
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: #111111;
+      margin: 40px auto;
+      border-radius: 2px;
+    }
+
+    /* ── STICKERS ── */
+    .stickers-mobile { display: contents; }
+
+    .sticker {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .sticker img {
+      display: block;
+      width: 100%;
+    }
+
+    /* top-right: cachorro con arnés */
+    .s1 { width: 240px; right: 140px; top: 40px;    transform: rotate(6deg);  z-index: 101; }
+    /* bottom-left atrás: perro con suéter */
+    .s2 { width: 190px; left: 40px;   bottom: 100px; transform: rotate(-4deg); z-index: 102; }
+    /* bottom-left adelante: perro lengua */
+    .s3 { width: 210px; left: 140px;  bottom: 40px;  transform: rotate(8deg);  z-index: 103; }
+    /* bottom-right: perro ojos grandes */
+    .s4 { width: 230px; right: 40px;  bottom: 40px;  transform: rotate(-7deg); z-index: 101; }
+
+    /* ── PRIZES ── */
+    .prizes-section {
+      padding: 0 24px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+    }
+
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .prize-card {
+      border: 1px solid #282828;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      background: #f8f8f6;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .prize-card:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .prize-card .card-number {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #282828;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .card-image-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #f3f4f6;
+      overflow: hidden;
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-image-wrap .placeholder-icon {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d1d5db;
+    }
+
+    .card-image-wrap .placeholder-icon svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    .card-body {
+      padding: 14px 16px 18px;
+      text-align: center;
+    }
+
+    .card-body .prize-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111111;
+      line-height: 1.4;
+    }
+
+    .card-body .prize-value {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* ── INSTRUCTIONS ── */
+    .instructions-section {
+      background: #ebf852;
+      padding: 72px 24px;
+    }
+
+    .instructions-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .instructions-section .section-title {
+      margin-bottom: 32px;
+    }
+
+    .steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+      margin-bottom: 48px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #282828;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .step-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #282828;
+    }
+
+    .step-text strong {
+      color: #282828;
+    }
+
+    /* ── TRANSFER BOX ── */
+    .transfer-box {
+      border: 1px solid #7395e7;
+      border-radius: 16px;
+      padding: 32px;
+      background: #fff;
+      text-align: left;
+    }
+
+    .transfer-box h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #7395e7;
+    }
+
+    .transfer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #e8eefb;
+      gap: 12px;
+    }
+
+    .transfer-row:last-child {
+      border-bottom: none;
+    }
+
+    .transfer-label {
+      font-size: 13px;
+      color: #7395e7;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .transfer-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #7395e7;
+      text-align: right;
+    }
+
+    /* ── PRICE LABEL ── */
+    .price-label-wrap {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .price-label {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #7395e7;
+      color: #7395e7;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 999px;
+    }
+
+    .price-label strong {
+      font-weight: 700;
+    }
+
+    /* ── COPY BUTTON ── */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #7395e7;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .copy-btn:hover { background: #5a7de0; }
+    .copy-btn:active { transform: scale(0.97); }
+    .copy-btn.copied { background: #282828; }
+
+    .thanks-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: #7395e7;
+      margin-top: 40px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 24px;
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    @media (max-width: 900px) {
+      .s2-desktop { display: none; }
+
+      .prizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .divider-wrap {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .divider-wrap .s2 {
+        display: block;
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%) rotate(-6deg);
+        width: 130px;
+        z-index: 10;
+      }
+
+      .divider-wrap .s2 img {
+        width: 100%;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      }
+
+      .sticker {
+        position: static;
+        transform: none;
+        width: auto;
+      }
+
+      .hero-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding: 60px 24px 40px;
+      }
+
+      .stickers-mobile {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+      .sticker img {
+        width: 130px;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      }
+
+      .s1 { transform: rotate(8deg);  margin-right: -36px; z-index: 1; }
+      .s1 img { width: 160px; }
+      .s2 { transform: rotate(-12deg); margin-right: -32px; z-index: 2; }
+      .s3 { transform: rotate(10deg); margin-right: -36px; z-index: 1; }
+      .s4 { transform: rotate(-8deg); z-index: 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero-wrapper">
+    <div class="hero">
+      <span class="hero-badge">✦ RIFA POR APOLO</span>
+      <h1>Nuestro perro Apolo estuvo una semana hospitalizado de urgencia.</h1>
+      <p>Para cubrir los gastos, organizamos una rifa con premios vinculados al arte y el diseño. Gracias por apoyarnos.</p>
+    </div>
+
+    <div class="sticker s2 s2-desktop"><img src="img/2.png" alt="Apolo" /></div>
+    <div class="stickers-mobile">
+      <div class="sticker s1"><img src="img/1.png" alt="Apolo" /></div>
+      <div class="sticker s3"><img src="img/3.png" alt="Apolo" /></div>
+      <div class="sticker s4"><img src="img/4.png" alt="Apolo" /></div>
+    </div>
+  </section>
+
+  <!-- PRIZES -->
+  <section class="prizes-section">
+    <h2 class="section-title">Premios</h2>
+    <div class="prizes-grid">
+
+      <a class="prize-card" href="https://www.instagram.com/idraw_youhappy?igsh=Ymtjcnk4M3JxbDA5" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p1.jpg" alt="I draw you happy" /><span class="card-number">#1</span></div><div class="card-body"><p class="prize-name">I draw you happy</p><p class="prize-value">Print + Cerámica</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/barbara.og?igsh=MXFkNGlpNHN1Y2tsOA==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p2.jpg" alt="Bárbara Ortiz" /><span class="card-number">#2</span></div><div class="card-body"><p class="prize-name">Bárbara Ortiz</p><p class="prize-value">The Chair Archive — Ilustración</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/enila.cl?igsh=cHh6bWoxamM0YXU1" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p3.jpg" alt="ENILĀ" /><span class="card-number">#3</span></div><div class="card-body"><p class="prize-name">ENILĀ</p><p class="prize-value">$60.000 en tienda</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/andresherrerav?igsh=NHpudHdnaDBkcXRi" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p4.jpg" alt="Andrés Herrera" /><span class="card-number">#4</span></div><div class="card-body"><p class="prize-name">Andrés Herrera</p><p class="prize-value">Anillo</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/brekkie.cl?igsh=NHpvY2Z4bmg5NjRu" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p5.jpg" alt="Brekkie" /><span class="card-number">#5</span></div><div class="card-body"><p class="prize-name">Brekkie</p><p class="prize-value">Brunch para 2 personas</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/josebenmayor?igsh=MTF3aHl0Y2M5NDdsNQ==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p6.jpg" alt="Jose Benmayor" /><span class="card-number">#6</span></div><div class="card-body"><p class="prize-name">Jose Benmayor</p><p class="prize-value">Obra</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/catalina.cumsille?igsh=MjNpdXI1eWhqeDYw" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p7.jpg" alt="Catalina Cumsille" /><span class="card-number">#7</span></div><div class="card-body"><p class="prize-name">Catalina Cumsille</p><p class="prize-value">Cerámica</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/chopshop.cl?igsh=YnVsNW02ZXNma2V2" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p8.jpg" alt="Chopshop" /><span class="card-number">#8</span></div><div class="card-body"><p class="prize-name">Chopshop</p><p class="prize-value">Corte, tote y taza (×2)</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/puchworks.studio" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p9.jpg" alt="PUCHWORKS Studio" /><span class="card-number">#9</span></div><div class="card-body"><p class="prize-name">PUCHWORKS Studio</p><p class="prize-value">Tote, Polera, Llavero + Stickers</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/fury_art?igsh=bDk5dXU4MDlzZGx5" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p10.jpg" alt="FURY ART" /><span class="card-number">#10</span></div><div class="card-body"><p class="prize-name">FURY ART</p><p class="prize-value">Tatuaje pequeño</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/franci_world?igsh=bmtzam92bHgxNjRv" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p11.jpg" alt="Franci" /><span class="card-number">#11</span></div><div class="card-body"><p class="prize-name">Franci</p><p class="prize-value">Polera</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/galiocl?igsh=MWVwaXdudmJlOTd5aA==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p12.jpg" alt="Galio" /><span class="card-number">#12</span></div><div class="card-body"><p class="prize-name">Galio</p><p class="prize-value">Galio Volumen I</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/valentinacorralsilva?igsh=MTZrOHo3NWlmdHZwdA==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p13.jpg" alt="Valentina Corral" /><span class="card-number">#13</span></div><div class="card-body"><p class="prize-name">Valentina Corral</p><p class="prize-value">Sesión fotográfica retrato</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/camila.de.dios?igsh=MXB3Y242Ym00N2c2Ng==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p14.jpg" alt="Camila De Dios" /><span class="card-number">#14</span></div><div class="card-body"><p class="prize-name">Camila De Dios</p><p class="prize-value">Cerámica</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/_andarino?igsh=MWxjb2hkczNrYXhhZg==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p15.jpg" alt="Andarino" /><span class="card-number">#15</span></div><div class="card-body"><p class="prize-name">Andarino</p><p class="prize-value">Serigrafía</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/opiajoyas?igsh=MWU2cDh2dXRucmRnYQ==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p16.jpg" alt="OPIA" /><span class="card-number">#16</span></div><div class="card-body"><p class="prize-name">OPIA</p><p class="prize-value">Medalla Venus</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/aterogaeta?igsh=bDF0N2ExODdweTVn" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p17.jpg" alt="Javier Otero" /><span class="card-number">#17</span></div><div class="card-body"><p class="prize-name">Javier Otero</p><p class="prize-value">Obra</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/yojuliecarles?igsh=MXFkN3RncHU2aXB5eQ==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p18.jpg" alt="Julie Carles" /><span class="card-number">#18</span></div><div class="card-body"><p class="prize-name">Julie Carles</p><p class="prize-value">Cerámica</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/sebastiancobo?igsh=MTh5c3Y2YnFrc2sxYQ==" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p19.jpg" alt="Sebastián Cobo" /><span class="card-number">#19</span></div><div class="card-body"><p class="prize-name">Sebastián Cobo</p><p class="prize-value">Cerámica</p></div></a>
+
+      <a class="prize-card" href="https://www.instagram.com/isidoravillarinoh?igsh=aHQ0MDdhY2l6dmNx" target="_blank" rel="noopener"><div class="card-image-wrap"><img src="img/p20.jpg" alt="Isidora Villarino" /><span class="card-number">#20</span></div><div class="card-body"><p class="prize-name">Isidora Villarino</p><p class="prize-value">Obra</p></div></a>
+
+    </div>
+  </section>
+
+  <div class="divider-wrap">
+    <div class="sticker s2"><img src="img/2.png" alt="Apolo" /></div>
+  </div>
+
+  <!-- INSTRUCTIONS + TRANSFER -->
+  <section class="instructions-section">
+    <div class="instructions-inner">
+      <h2 class="section-title">¿Cómo participar?</h2>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-number">1</span>
+          <span class="step-text"><strong>Deposita</strong> a la cuenta de aquí abajo. El precio de cada número es de <strong>$10.000</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-number">2</span>
+          <span class="step-text"><strong>Envía el comprobante</strong> a <a href="mailto:cristobal.amigop@gmail.com" style="color:#282828;">cristobal.amigop@gmail.com</a></span>
+        </li>
+        <li class="step">
+          <span class="step-number">3</span>
+          <span class="step-text"><strong>Una vez recibido el comprobante</strong>, te enviaremos un link para que elijas tu número entre los disponibles.</span>
+        </li>
+        <li class="step">
+          <span class="step-number">4</span>
+          <span class="step-text"><strong>Espera el sorteo.</strong> Te avisaremos el resultado del sorteo.</span>
+        </li>
+      </ol>
+
+      <div class="price-label-wrap">
+        <span class="price-label">Valor por número: <strong>$10.000</strong></span>
+      </div>
+
+      <div class="transfer-box">
+        <h3>Datos de transferencia</h3>
+        <div class="transfer-row">
+          <span class="transfer-label">Banco</span>
+          <span class="transfer-value">Santander</span>
+        </div>
+        <div class="transfer-row">
+          <span class="transfer-label">Tipo de cuenta</span>
+          <span class="transfer-value">Cuenta Corriente</span>
+        </div>
+        <div class="transfer-row">
+          <span class="transfer-label">Número de cuenta</span>
+          <span class="transfer-value">000069097766</span>
+        </div>
+        <div class="transfer-row">
+          <span class="transfer-label">RUT</span>
+          <span class="transfer-value">17.268.335-5</span>
+        </div>
+        <div class="transfer-row">
+          <span class="transfer-label">Nombre</span>
+          <span class="transfer-value">Cristobal Eduardo Sebastian Amigo Perez</span>
+        </div>
+        <div class="transfer-row">
+          <span class="transfer-label">Correo</span>
+          <span class="transfer-value"><a href="mailto:cristobal.amigop@gmail.com" style="color:#7395e7;">cristobal.amigop@gmail.com</a></span>
+        </div>
+      </div>
+
+      <button class="copy-btn" onclick="copyTransferData()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar datos de transferencia
+      </button>
+
+      <h2 class="thanks-title">¡Gracias por apoyarnos!</h2>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 · Rifa por Apolo
+  </footer>
+
+  <script>
+    /* ── COPY TRANSFER ── */
+    function copyTransferData() {
+      const rows = document.querySelectorAll('.transfer-box .transfer-row');
+      const lines = Array.from(rows).map(row => {
+        const label = row.querySelector('.transfer-label').textContent.trim();
+        const value = row.querySelector('.transfer-value').textContent.trim();
+        return `${label}: ${value}`;
+      });
+      const text = lines.join('\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ¡Copiado!`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar datos de transferencia`;
+        }, 2500);
+      });
+    }
+  </script>
+</body>
+</html>
